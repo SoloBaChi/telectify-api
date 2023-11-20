@@ -47,11 +47,7 @@ auth.signUp = async (req, res) => {
 
     const houseId = sliceId(getHouseId.toString());
 
-    let successFulEmail = await new Email(
-      user,
-      houseId,
-      user.houseAddress,
-    ).sendUniqueId();
+    await new Email(user, houseId, user.houseAddress).sendUniqueId();
 
     // hash the house unique Id
     // const hashedHouseId = await bcrypt.hash(houseId, 10);
@@ -80,7 +76,7 @@ auth.signUp = async (req, res) => {
         "success",
         200,
         `Account Created Successfully, Please check your email for your unique Id !
-        if you did not get any Id use this id${updatedUser.uniqueId} to login
+        if you did not get any Id use "${updatedUser.uniqueId}" to login
         `,
         {
           token,
