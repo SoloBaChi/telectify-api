@@ -11,7 +11,7 @@ dbServices.connectToDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    const connect = await mongoose.connect(uri,params);
+    const connect = await mongoose.connect(uri, params);
     console.log(
       `connnected succesfully to ${connect.connection.host} database`,
     );

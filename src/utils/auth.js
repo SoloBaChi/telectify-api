@@ -5,7 +5,7 @@ const validationRes = require("express-validator").validationResult;
 // import the tenant model
 const Tenant = require("../models/tenant.model");
 const ResponseMessage = require("./message.response");
-const sliceId = require("./slice.id");
+// const sliceId = require("./slice.id");
 const Email = require("../services/email.services");
 
 // create token function
@@ -45,9 +45,7 @@ auth.signUp = async (req, res) => {
     //update tenant unique id
     const getHouseId = await user._id;
 
-    const houseId = sliceId(getHouseId.toString());
-
-    await new Email(user, houseId, user.houseAddress).sendUniqueId();
+    const houseId = getHouseId.toString().slice(5, 10);
 
     // hash the house unique Id
     // const hashedHouseId = await bcrypt.hash(houseId, 10);
@@ -62,7 +60,8 @@ auth.signUp = async (req, res) => {
     );
     /*
     same as the updating function code above...user.uniqueId = hashedHouseId;
-     // save the unique id value in the database
+
+    // save the unique id value in the database
     // await user.save();
     */
 
@@ -70,14 +69,16 @@ auth.signUp = async (req, res) => {
     const token = await accessToken(updatedUser);
 
     // send email to the client / user
+    await new Email(
+      updatedUser,
+      houseId,
+      updatedUser.houseAddress,
+    ).sendUniqueId();
 
     return res.status(200).json(
       new ResponseMessage(
-        "success",
-        200,
-        `Account Created Successfully, Please check your email for your unique Id !
-        if you did not get any Id use "${updatedUser.uniqueId}" to login
-        `,
+        `success", 200, "Account Created Successfully!,Please check your email for your unique Id !
+       if you did not get any Id use "${updatedUser.uniqueId}" to login`,
         {
           token,
           updatedUser,
