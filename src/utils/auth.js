@@ -77,7 +77,9 @@ auth.signUp = async (req, res) => {
 
     return res.status(200).json(
       new ResponseMessage(
-        `success", 200, "Account Created Successfully!,Please check your email for your unique Id !
+        "success",
+        200,
+        `Account Created Successfully!,Please check your email for your unique Id !
        if you did not get any Id use "${updatedUser.uniqueId}" to login`,
         {
           token,
