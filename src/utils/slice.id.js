@@ -1,5 +1,5 @@
-const sliceId = (id) => {
-  return id.slice(8, 18);
-};
+// const sliceId = (id) => {
+//   return id.slice(8, 18);
+// };
 
-module.exports = sliceId;
+// module.exports = sliceId;
