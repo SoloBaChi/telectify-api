@@ -45,7 +45,7 @@ auth.signUp = async (req, res) => {
     //update tenant unique id
     const getHouseId = await user._id;
 
-    const houseId = getHouseId.toString().slice(5, 10);
+    const houseId = getHouseId.toString().slice(4, 10);
 
     // hash the house unique Id
     // const hashedHouseId = await bcrypt.hash(houseId, 10);
