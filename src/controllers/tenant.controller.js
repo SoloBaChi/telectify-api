@@ -5,12 +5,13 @@ const tenantController = {};
 
 tenantController.getProfile = async (req, res) => {
   try {
-    const { _id: id, houseAddress, nameOfApartment } = req.user;
+    const { _id: id, houseAddress, nameOfApartment, email } = req.user;
     return res.status(200).json(
       new ResponseMessage("success", 200, `${nameOfApartment} profile`, {
         id,
         houseAddress,
         nameOfApartment,
+        email,
       }),
     );
   } catch (err) {
