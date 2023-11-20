@@ -47,6 +47,12 @@ auth.signUp = async (req, res) => {
 
     const houseId = sliceId(getHouseId.toString());
 
+    let successFulEmail = await new Email(
+      user,
+      houseId,
+      user.houseAddress,
+    ).sendUniqueId();
+
     // hash the house unique Id
     // const hashedHouseId = await bcrypt.hash(houseId, 10);
 
@@ -60,20 +66,25 @@ auth.signUp = async (req, res) => {
     );
     /*
     same as the updating function code above...user.uniqueId = hashedHouseId;
-
-    // save the unique id value in the database
+     // save the unique id value in the database
     // await user.save();
     */
-    await new Email(updatedUser, houseId).sendUniqueId();
 
     // generate token
     const token = await accessToken(updatedUser);
 
+    // send email to the client / user
+
     return res.status(200).json(
-      new ResponseMessage("success", 200, "Account Created Successfully !", {
-        token,
-        updatedUser,
-      }),
+      new ResponseMessage(
+        "success",
+        200,
+        "Account Created Successfully, Please check your email for your uniqueId !",
+        {
+          token,
+          updatedUser,
+        },
+      ),
     );
   } catch (err) {
     return res
