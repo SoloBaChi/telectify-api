@@ -107,7 +107,10 @@ auth.logIn = async (req, res) => {
   try {
     // check if the user email exist
     const { houseAddress, uniqueId } = req.body;
-    const tenant = await Tenant.findOne({ uniqueId: uniqueId });
+    const tenant = await Tenant.findOne({
+      uniqueId: uniqueId,
+      houseAddress: houseAddress,
+    });
     console.log(tenant);
     // const { uniqueId } = tenant;
 
